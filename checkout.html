@@ -10,13 +10,26 @@
 body {
   font-family: Arial;
   background: #f7f3ef;
+  margin: 0;
 }
 
 .container {
   max-width: 500px;
-  margin: 80px auto;
+  margin: 60px auto;
   background: white;
-  padding: 30px;
+  padding: 25px;
+  border-radius: 10px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
 }
 
 button {
@@ -25,6 +38,23 @@ button {
   background: black;
   color: white;
   border: none;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.pix-box {
+  display: none;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pix-box img {
+  width: 200px;
+}
+
+.resumo p {
+  border-bottom: 1px solid #eee;
+  padding: 5px 0;
 }
 </style>
 </head>
@@ -34,10 +64,24 @@ button {
 <div class="container">
   <h2>Finalizar Compra</h2>
 
-  <div id="resumo"></div>
+  <div id="resumo" class="resumo"></div>
 
-  <input id="nome" placeholder="Nome">
+  <input id="nome" placeholder="Nome completo">
   <input id="email" placeholder="Email">
+  <input id="telefone" placeholder="Telefone">
+  <input id="endereco" placeholder="Endereço completo">
+
+  <select id="pagamento" onchange="togglePagamento()">
+    <option value="">Forma de pagamento</option>
+    <option value="pix">PIX</option>
+    <option value="cartao">Cartão</option>
+  </select>
+
+  <div class="pix-box" id="pixBox">
+    <p><strong>Pagamento via PIX</strong></p>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=13092262700">
+    <p>Escaneie o QR Code para pagar</p>
+  </div>
 
   <button onclick="finalizar()">Finalizar Pedido</button>
 </div>
@@ -45,40 +89,80 @@ button {
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-let html = "";
 let total = 0;
+let resumoHTML = "";
 
-cart.forEach(i => {
-  html += `<p>${i.nome} - R$ ${i.preco}</p>`;
-  total += i.preco;
+cart.forEach(item => {
+  let subtotal = item.preco * item.qtd;
+  total += subtotal;
+
+  resumoHTML += `
+    <p>
+      ${item.nome}<br>
+      ${item.qtd}x R$ ${item.preco.toFixed(2)} = 
+      <strong>R$ ${subtotal.toFixed(2)}</strong>
+    </p>
+  `;
 });
 
-html += `<h3>Total: R$ ${total.toFixed(2)}</h3>`;
+resumoHTML += `<h3>Total: R$ ${total.toFixed(2)}</h3>`;
+document.getElementById("resumo").innerHTML = resumoHTML;
 
-document.getElementById("resumo").innerHTML = html;
 
+// MOSTRAR PIX
+function togglePagamento() {
+  let tipo = document.getElementById("pagamento").value;
+
+  document.getElementById("pixBox").style.display =
+    tipo === "pix" ? "block" : "none";
+}
+
+
+// FINALIZAR PEDIDO
 function finalizar() {
   let nome = document.getElementById("nome").value;
+  let telefone = document.getElementById("telefone").value;
+  let endereco = document.getElementById("endereco").value;
+  let pagamento = document.getElementById("pagamento").value;
 
-  if(!nome){
-    alert("Preencha o nome");
+  if (!nome || !telefone || !endereco || !pagamento) {
+    alert("Preencha todos os campos");
     return;
   }
 
+  // SALVAR VENDA
   let vendas = JSON.parse(localStorage.getItem("vendas")) || [];
 
   vendas.push({
     cliente: nome,
-    total: total,
-    itens: cart
+    telefone,
+    endereco,
+    pagamento,
+    total,
+    itens: cart,
+    data: new Date().toLocaleString()
   });
 
   localStorage.setItem("vendas", JSON.stringify(vendas));
 
-  localStorage.removeItem("cart");
+  // MONTAR MENSAGEM WHATSAPP
+  let mensagem = `Pedido Mareva 🛍️%0A%0A`;
+  
+  cart.forEach(item => {
+    mensagem += `${item.nome} - ${item.qtd}x R$ ${item.preco}%0A`;
+  });
 
-  alert("Compra realizada!");
-  window.location.href = "index.html";
+  mensagem += `%0ATotal: R$ ${total.toFixed(2)}%0A`;
+  mensagem += `Cliente: ${nome}%0A`;
+  mensagem += `Endereço: ${endereco}%0A`;
+  mensagem += `Pagamento: ${pagamento}`;
+
+  // SEU WHATSAPP AQUI
+  let numero = "5522997961572";
+
+  window.open(`https://wa.me/${numero}?text=${mensagem}`, "_blank");
+
+  localStorage.removeItem("cart");
 }
 </script>
 
