@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mareva — Beachwear</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bege: #f7f3ef;
+  --areia: #e8dccf;
+  --marrom: #8c6a4a;
+  --verde: #5e7d6a;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: var(--bege);
+  color: #333;
+  body {
+  padding-top: 80px;
+}
+
+/* HEADER */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  box-sizing: border-box; /* 🔥 ESSENCIAL */
+}
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  letter-spacing: 2px;
+}
+
+.menu a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #333;
+}
+
+/* HERO */
+.hero {
+  height: 100vh;
+  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display';
+  font-size: 48px;
+}
+
+.hero p {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+/* GRID */
+.section {
+  padding: 80px 40px;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap: 30px;
+}
+
+.card {
+  overflow: hidden;
+  position: relative;
+}
+
+.card img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  transition: 0.5s;
+}
+
+.card:hover img {
+  transform: scale(1.1);
+}
+
+.card-info {
+  padding: 15px 5px;
+}
+
+.card-info h3 {
+  font-size: 18px;
+}
+
+.price {
+  color: var(--marrom);
+  font-weight: 500;
+}
+
+/* BOTÃO WHATS */
+.buy-btn {
+  display: block;
+  margin-top: 10px;
+  padding: 10px;
+  background: var(--verde);
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.buy-btn:hover {
+  background: #4b6555;
+}
+
+/* STORY */
+.story {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 40px;
+}
+
+.story img {
+  width: 100%;
+  max-width: 500px;
+}
+
+.story-text {
+  max-width: 500px;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 40px;
+  background: #fff;
+  margin-top: 40px;
+}
+.card-info h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.price {
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25D366;
+  color: white;
+  font-size: 24px;
+  padding: 15px;
+  border-radius: 50%;
+  text-decoration: none;
+  z-index: 1000;
+}
+/* =========================
+   MOBILE FIRST AJUSTES
+========================= */
+
+@media (max-width: 768px) {
+
+  /* HEADER */
+  header {
+    padding: 15px 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .menu {
+    margin-top: 10px;
+  }
+
+  .menu a {
+    margin: 0 10px;
+    font-size: 14px;
+  }
+
+  /* HERO */
+  .hero {
+    height: 80vh;
+    padding: 0 20px;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+    line-height: 1.2;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .hero .buy-btn {
+    margin-top: 15px;
+    display: inline-block;
+  }
+
+  /* SECTION */
+  .section {
+    padding: 50px 20px;
+  }
+
+  h2 {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  /* PRODUTOS */
+  .products {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .card img {
+    height: 280px;
+  }
+
+  .card-info h3 {
+    font-size: 16px;
+  }
+
+  .price {
+    font-size: 14px;
+  }
+
+  .buy-btn {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  /* STORY */
+  .story {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .story img {
+    max-width: 100%;
+  }
+
+  .story-text {
+    max-width: 100%;
+  }
+
+  /* FOOTER */
+  footer {
+    font-size: 14px;
+    padding: 30px 20px;
+  }
+
+}
+
+/* =========================
+   TELAS MUITO PEQUENAS
+========================= */
+
+@media (max-width: 480px)header {
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu {
+  justify-content: center;
+} {
+
+  .hero h1 {
+    font-size: 24px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  .menu a {
+    font-size: 13px;
+  }
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.menu a {
+  margin-left: 15px;
+  font-size: 14px;
+}.insta-link img {
+  width: 20px;
+  height: 20px;
+  margin-left: 15px;
+  vertical-align: middle;
+  transition: 0.3s;
+}
+
+.insta-link img:hover {
+  transform: scale(1.2);
+}.insta-link img {
+  margin-top: 5px;
+}
+}.cart-icon {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+#cart {
+  position: fixed;
+  right: -400px;
+  top: 0;
+  width: 350px;
+  height: 100%;
+  background: white;
+  box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+  padding: 20px;
+  transition: 0.4s;
+  z-index: 2000;
+}
+
+#cart.open {
+  right: 0;
+}
+
+.cart-item {
+  margin-bottom: 15px;
+}
+
+.checkout-btn {
+  display: block;
+  background: black;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  margin-top: 20px;
+  text-decoration: none;
+}
+</style>
+</head>
+<div id="cart">
+  <h3>Seu Carrinho</h3>
+  <div id="cart-items"></div>
+  <p><strong>Total: R$ <span id="total">0</span></strong></p>
+
+  <a href="checkout.html" class="checkout-btn">Finalizar Compra</a>
+</div>
+<body>
+
+<header>
+  <div class="logo">MAREVA</div>
+  <div class="menu">
+  <a href="#colecao">Coleção</a>
+  <a href="#historia">História</a>
+<a href="https://instagram.com/mareva.rio" target="_blank" class="insta-link">
+  <svg width="20" height="20" fill="#333" viewBox="0 0 24 24">
+    <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 
+    5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm5 
+    5a5 5 0 110 10 5 5 0 010-10zm6.5-.9a1.1 
+    1.1 0 110 2.2 1.1 1.1 0 010-2.2zM12 
+    9a3 3 0 100 6 3 3 0 000-6z"/>
+  </svg>
+</a>
+<div class="cart-icon" onclick="openCart()">
+  🛒 <span id="cart-count">0</span>
+</div>
+</div>
+</header>
+
+<section class="hero">
+  <div>
+  <h1>Feita de sal, sol e mar</h1>
+  <p>Elegância natural para dias inesquecíveis</p>
+  <a href="#colecao" class="buy-btn">Ver Coleção</a>
+</div>
+</section>
+
+<section class="section" id="colecao">
+  <h2>Coleção Verão</h2>
+
+  <div class="products">
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1520975916090-3105956dac38">
+      <div class="card-info">
+        <h3>Vestido Brisa Tropical</h3>
+        <p class="price">R$ 189,90</p>
+		<p><strong>Peça Única</strong></p>
+        <a class="buy-btn" onclick="addToCart('Vestido Brisa Tropical', 189.90)">Adicionar ao carrinho</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d">
+      <div class="card-info">
+        <h3>Vestido Maré Alta</h3>
+        <p class="price">R$ 219,90</p>
+		<p><strong> Peça Única</strong></p>
+        <a class="buy-btn" onclick="addToCart('Vestido Brisa Tropical', 189.90)">Adicionar ao carrinho</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1503342452485-86ff0a4cdd1d">
+      <div class="card-info">
+        <h3>Saída de Praia Coral</h3>
+        <p class="price">R$ 159,90</p>
+		<p><strong> Peça Única</strong></p>
+        <a class="buy-btn" onclick="addToCart('Vestido Brisa Tropical', 189.90)">Adicionar ao carrinho</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section story" id="historia">
+  <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e">
+  <div class="story-text">
+    <h2>Nossa Essência</h2>
+    <p>
+      A Mareva nasce do encontro entre o mar, o sol e a liberdade.
+      Cada peça é pensada para mulheres que querem se sentir leves,
+      elegantes e conectadas com a natureza.
+    </p>
+  </div>
+</section>
+
+<footer>
+  © 2026 Mareva — Todos os direitos reservados
+</footer>
+</div>
+</section>
+
+<!-- CARRINHO -->
+<div id="cart">
+  <h3>Carrinho</h3>
+  <div id="items"></div>
+  <p>Total: R$ <span id="total">0</span></p>
+  <a href="checkout.html" class="buy-btn">Finalizar</a>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function addToCart(nome, preco) {
+  cart.push({nome, preco});
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCart();
+}
+
+function updateCart() {
+  document.getElementById("count").innerText = cart.length;
+
+  let html = "";
+  let total = 0;
+
+  cart.forEach(i => {
+    html += `<p>${i.nome} - R$ ${i.preco}</p>`;
+    total += i.preco;
+  });
+
+  document.getElementById("items").innerHTML = html;
+  document.getElementById("total").innerText = total.toFixed(2);
+}
+
+function openCart() {
+  document.getElementById("cart").classList.toggle("open");
+}
+
+updateCart();
+</script>
+</body>
+</html>
