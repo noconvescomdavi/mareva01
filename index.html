@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mareva </title>
 
-<title>Mareva — Beachwear</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Belleza&display=swap" rel="stylesheet">
 <style>
 :root {
   --bege: #f7f3ef;
@@ -15,13 +12,15 @@
   --marrom: #8c6a4a;
   --verde: #5e7d6a;
 }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
   background: var(--bege);
   color: #333;
-  body {
   padding-top: 80px;
 }
 
@@ -38,9 +37,8 @@ header {
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
-  box-sizing: border-box; /* 🔥 ESSENCIAL */
-}
-}
+  box-sizing: border-box;
+} /* 🔥 ESSENCIAL */
 
 .logo {
   font-family: 'Playfair Display', serif;
@@ -125,6 +123,7 @@ header {
   text-align: center;
   text-decoration: none;
   transition: 0.3s;
+  cursor: pointer; /* 👈 ADICIONE ESSA LINHA */
 }
 
 .buy-btn:hover {
@@ -277,14 +276,14 @@ footer {
    TELAS MUITO PEQUENAS
 ========================= */
 
-@media (max-width: 480px)header {
-  flex-direction: column;
-  gap: 8px;
-}
-
+@media (max-width: 480px) {
+  header {
+    flex-direction: column;
+    gap: 8px;
+  }
 .menu {
   justify-content: center;
-} {
+} 
 
   .hero h1 {
     font-size: 24px;
@@ -329,23 +328,47 @@ footer {
 
 #cart {
   position: fixed;
-  right: -400px;
+  right: 0;
   top: 0;
   width: 350px;
   height: 100%;
   background: white;
-  box-shadow: -5px 0 20px rgba(0,0,0,0.1);
   padding: 20px;
-  transition: 0.4s;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 2000;
+  box-shadow: -10px 0 30px rgba(0,0,0,0.1);
 }
 
 #cart.open {
-  right: 0;
+  transform: translateX(0);
 }
 
 .cart-item {
-  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+.qtd-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 5px 0;
+}
+
+.qtd-control button {
+  padding: 5px 10px;
+  border: none;
+  background: #ddd;
+  cursor: pointer;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 12px;
 }
 
 .checkout-btn {
@@ -357,22 +380,358 @@ footer {
   margin-top: 20px;
   text-decoration: none;
 }
+.close-cart {
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.close-cart:hover {
+  transform: scale(1.2);
+}
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  z-index: 1500;
+}
+
+#overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+#cart {
+  z-index: 2000;
+}
+#lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  z-index: 3000;
+}
+
+#lightbox.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+#lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+}
+#gallery {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  z-index: 3000;
+}
+
+#gallery.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+#gallery-img {
+  max-width: 90%;
+  max-height: 70%;
+  border-radius: 10px;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+}
+
+.nav {
+  position: absolute;
+  top: 50%;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.prev { left: 20px; }
+.next { right: 20px; }
+
+#thumbs {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+#thumbs img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  opacity: 0.6;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#thumbs img.active {
+  opacity: 1;
+  border: 2px solid white;
+}
+body {
+  transition: opacity 0.3s ease;
+}
+
+body.fade-out {
+  opacity: 0;
+}
+.buy-btn {
+  cursor: pointer;
+}
+.card {
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+.logo img {
+  height: 50px;
+  transition: 0.3s;
+}
+
+.logo img:hover {
+  opacity: 0.7;
+}@media (max-width: 768px) {
+  .logo img {
+    height: 50px;
+  }
+}
+/* BOTÃO MENU */
+.menu-toggle {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+/* HAMBURGUER */
+.hamburger {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: black;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.hamburger::before,
+.hamburger::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: black;
+  left: 0;
+  transition: 0.3s;
+}
+
+.hamburger::before {
+  top: -8px;
+}
+
+.hamburger::after {
+  top: 8px;
+}
+
+/* ÍCONE X */
+.close-icon {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+/* ANIMAÇÃO */
+#sidemenu-drawer:checked + .menu-toggle .hamburger {
+  background: transparent;
+}
+
+#sidemenu-drawer:checked + .menu-toggle .hamburger::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+#sidemenu-drawer:checked + .menu-toggle .hamburger::after {
+  transform: rotate(-45deg);
+  top: 0;
+}
+
+#sidemenu-drawer:checked + .menu-toggle .close-icon {
+  opacity: 1;
+}
+
+/* MENU LATERAL */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100%;
+  background: white;
+  padding: 100px 30px;
+  transform: translateX(-100%);
+  transition: 0.4s ease;
+  z-index: 1500;
+  box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+}
+
+.side-menu a {
+  display: block;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.side-menu a:hover {
+  color: var(--verde);
+}
+
+/* ABRIR MENU */
+#sidemenu-drawer:checked ~ .side-menu {
+  transform: translateX(0);
+}
+header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.logo {
+  font-family: 'Belleza', sans-serif;
+  font-size: 24px;
+  letter-spacing: 5px;
+  color: #55bfcc;
+  transition: 0.3s;
+}
+
+.logo:hover {
+  opacity: 0.7;
+}@media (max-width: 768px) {
+  .logo {
+    font-size: 20px;
+    letter-spacing: 3px;
+  }
+}
+body, div, p, h1, h2, h3, span, a {
+  caret-color: transparent;
+}
+* {
+  cursor: default !important;
+}
+a,
+button,
+.buy-btn,
+.card img,
+.cart-icon,
+.remove-btn {
+  cursor: pointer !important;
+}
+body {
+  user-select: none;
+}
+input, textarea {
+  user-select: text;
+  cursor: text;
+}
+.menu-toggle,
+.menu-toggle svg {
+  cursor: pointer !important;
+}
+svg {
+  cursor: pointer;
+}
 </style>
 </head>
-<div id="cart">
-  <h3>Seu Carrinho</h3>
-  <div id="cart-items"></div>
-  <p><strong>Total: R$ <span id="total">0</span></strong></p>
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img">
+</div>
+<div id="gallery" onclick="closeGallery(event)">
+  <span class="close">✕</span>
 
-  <a href="checkout.html" class="checkout-btn">Finalizar Compra</a>
+  <img id="gallery-img">
+
+  <div class="nav prev" onclick="prevImage(event)">‹</div>
+  <div class="nav next" onclick="nextImage(event)">›</div>
+
+  <div id="thumbs"></div>
 </div>
 <body>
 
 <header>
+<input type="checkbox" id="sidemenu-drawer">
+
+<label for="sidemenu-drawer" class="menu-toggle">
+  <!-- ÍCONE HAMBÚRGUER -->
+  <span class="hamburger"></span>
+
+  <!-- ÍCONE FECHAR (seu SVG) -->
+  <svg stroke-width="1" class="close-icon">
+    <path d="M6 6L18 18M18 6L6 18" stroke="black"/>
+  </svg>
+</label><div class="side-menu">
+  <a href="#">Vestidos Longos</a>
+  <a href="#">Vestidos Curtos</a>
+  <a href="#">Macacão</a>
+  <a href="#">Macaquinho</a>
+  <a href="#">Acessórios</a>
+  <a href="#">Chapéus</a>
+  <a href="#">Bolsas</a>
+</div>
+<meta name="description" content="Descubra a coleção Mareva — beachwear elegante e natural">
+<meta property="og:title" content="Mareva — Beachwear">
+<meta property="og:description" content="Elegância natural para dias inesquecíveis">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://raw.githubusercontent.com/noconvescomdavi/mareva/refs/heads/main/mareva_logo.png">
+<meta property="og:url" content="file:///C:/Users/leal1/Downloads/index.html">
+
+<meta property="twitter:card" content="summary">
+<meta property="twitter:title" content="Mareva — Beachwear">
+<meta property="twitter:description" content="Elegância natural para dias inesquecíveis">
   <div class="logo">MAREVA</div>
+</div>
   <div class="menu">
   <a href="#colecao">Coleção</a>
-  <a href="#historia">História</a>
+  <a href="#historia">Sobre a MAREVA</a>
 <a href="https://instagram.com/mareva.rio" target="_blank" class="insta-link">
   <svg width="20" height="20" fill="#333" viewBox="0 0 24 24">
     <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 
@@ -383,11 +742,11 @@ footer {
   </svg>
 </a>
 <div class="cart-icon" onclick="openCart()">
-  🛒 <span id="cart-count">0</span>
+  🛒 <span id="count">0</span>
 </div>
 </div>
 </header>
-
+<div id="overlay" onclick="closeCart()"></div>
 <section class="hero">
   <div>
   <h1>Feita de sal, sol e mar</h1>
@@ -402,34 +761,44 @@ footer {
   <div class="products">
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1520975916090-3105956dac38">
-      <div class="card-info">
-        <h3>Vestido Brisa Tropical</h3>
-        <p class="price">R$ 189,90</p>
-		<p><strong>Peça Única</strong></p>
-        <a class="buy-btn" onclick="addToCart('Vestido Brisa Tropical', 189.90)">Adicionar ao carrinho</a>
-      </div>
-    </div>
+  <img 
+  src="https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=800&q=80"
+  onclick="openGallery([
+    'https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=800&q=80'
+  ], 0)"
+  style="cursor: zoom-in;">
+
+  <h3>Vestido Brisa Tropical</h3>
+  <p>R$ 189.90</p>
+
+  <div class="buy-btn" onclick="addToCart('Vestido Brisa Tropical', 189.90)">
+    Adicionar ao carrinho
+  </div>
+</div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d">
-      <div class="card-info">
-        <h3>Vestido Maré Alta</h3>
-        <p class="price">R$ 219,90</p>
-		<p><strong> Peça Única</strong></p>
-        <a class="buy-btn" onclick="addToCart('Vestido Brisa Tropical', 189.90)">Adicionar ao carrinho</a>
-      </div>
-    </div>
+  <img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=800&q=80"onclick="openLightbox(this.src)" style="cursor: zoom-in;">
+
+  <h3>Vestido Brisa Tropical</h3>
+  <p>R$ 189.90</p>
+
+  <div class="buy-btn" onclick="addToCart('Vestido Brisa Tropical', 189.90)">
+    Adicionar ao carrinho
+  </div>
+</div>
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1503342452485-86ff0a4cdd1d">
-      <div class="card-info">
-        <h3>Saída de Praia Coral</h3>
-        <p class="price">R$ 159,90</p>
-		<p><strong> Peça Única</strong></p>
-        <a class="buy-btn" onclick="addToCart('Vestido Brisa Tropical', 189.90)">Adicionar ao carrinho</a>
-      </div>
-    </div>
+  <img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=800&q=80"onclick="openLightbox(this.src)" style="cursor: zoom-in;">
+
+  <h3>Vestido Brisa Tropical</h3>
+  <p>R$ 189.90</p>
+
+  <div class="buy-btn" onclick="addToCart('Vestido Brisa Tropical', 189.90)">
+    Adicionar ao carrinho
+  </div>
+</div>
 
   </div>
 </section>
@@ -449,46 +818,183 @@ footer {
 <footer>
   © 2026 Mareva — Todos os direitos reservados
 </footer>
-</div>
-</section>
-
 <!-- CARRINHO -->
 <div id="cart">
-  <h3>Carrinho</h3>
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3>Carrinho</h3>
+    <span onclick="closeCart()" style="cursor:pointer; font-size:20px;">✕</span>
+  </div>
   <div id="items"></div>
   <p>Total: R$ <span id="total">0</span></p>
   <a href="checkout.html" class="buy-btn">Finalizar</a>
 </div>
-
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-function addToCart(nome, preco) {
-  cart.push({nome, preco});
+// SALVAR
+function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
   updateCart();
 }
 
+// ATUALIZAR CARRINHO
 function updateCart() {
-  document.getElementById("count").innerText = cart.length;
+  let totalItens = cart.reduce((sum, item) => sum + item.qtd, 0);
+document.getElementById("count").innerText = totalItens;
 
   let html = "";
   let total = 0;
 
-  cart.forEach(i => {
-    html += `<p>${i.nome} - R$ ${i.preco}</p>`;
-    total += i.preco;
+  cart.forEach((item, index) => {
+    total += item.preco * item.qtd;
+	
+    html += `
+      <div class="cart-item">
+        <p>${item.nome}</p>
+        <p>R$ ${item.preco}</p>
+
+        <div class="qtd-control">
+          <button onclick="changeQtd(${index}, -1)">-</button>
+          <span>${item.qtd}</span>
+          <button onclick="changeQtd(${index}, 1)">+</button>
+        </div>
+
+        <button class="remove-btn" onclick="removeItem(${index})">Remover</button>
+      </div>
+    `;
   });
 
   document.getElementById("items").innerHTML = html;
   document.getElementById("total").innerText = total.toFixed(2);
 }
 
-function openCart() {
-  document.getElementById("cart").classList.toggle("open");
+// ALTERAR QUANTIDADE
+function changeQtd(index, change) {
+  cart[index].qtd += change;
+
+  if (cart[index].qtd <= 0) {
+    cart.splice(index, 1);
+  }
+
+  saveCart();
 }
 
+// REMOVER ITEM
+function removeItem(index) {
+  cart.splice(index, 1);
+  saveCart();
+}
+
+// ABRIR / FECHAR
+function openCart() {
+  document.getElementById("cart").classList.add("open");
+  document.getElementById("overlay").classList.add("show");
+}
+
+function closeCart() {
+  document.getElementById("cart").classList.remove("open");
+  document.getElementById("overlay").classList.remove("show");
+}
+function addToCart(nome, preco) {
+  const existing = cart.find(item => item.nome === nome);
+
+  if (existing) {
+    existing.qtd += 1;
+  } else {
+    cart.push({ nome, preco, qtd: 1 });
+  }
+
+  saveCart();
+}function showFeedback(btn) {
+  btn.innerText = "Adicionado!";
+  
+  setTimeout(() => {
+    btn.innerText = "Adicionar ao carrinho";
+  }, 1500);
+}
+
+
 updateCart();
+function openLightbox(src) {
+  document.getElementById("lightbox-img").src = src;
+  document.getElementById("lightbox").classList.add("show");
+}
+
+function closeLightbox() {
+  document.getElementById("lightbox").classList.remove("show");
+}
+let galleryImages = [];
+let currentIndex = 0;
+
+function openGallery(images, index) {
+  galleryImages = images;
+  currentIndex = index;
+
+  document.getElementById("gallery").classList.add("show");
+  updateGallery();
+}
+
+function updateGallery() {
+  document.getElementById("gallery-img").src = galleryImages[currentIndex];
+
+  let thumbs = "";
+  galleryImages.forEach((img, i) => {
+    thumbs += `
+      <img src="${img}" onclick="setImage(${i})"
+      class="${i === currentIndex ? 'active' : ''}">
+    `;
+  });
+
+  document.getElementById("thumbs").innerHTML = thumbs;
+}
+
+function setImage(index) {
+  currentIndex = index;
+  updateGallery();
+}
+
+function nextImage(event) {
+  event.stopPropagation();
+  currentIndex = (currentIndex + 1) % galleryImages.length;
+  updateGallery();
+}
+
+function prevImage(event) {
+  event.stopPropagation();
+  currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+  updateGallery();
+}
+
+function closeGallery(e) {
+  if (e.target.id === "gallery") {
+    document.getElementById("gallery").classList.remove("show");
+  }
+}
+
+/* SWIPE MOBILE */
+let startX = 0;
+
+document.getElementById("gallery").addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+});
+
+document.getElementById("gallery").addEventListener("touchend", e => {
+  let endX = e.changedTouches[0].clientX;
+
+  if (startX - endX > 50) nextImage(e);
+  if (endX - startX > 50) prevImage(e);
+});
+document.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", function(e) {
+    if (this.href && !this.href.includes("#")) {
+      e.preventDefault();
+      document.body.classList.add("fade-out");
+      setTimeout(() => {
+        window.location = this.href;
+      }, 300);
+    }
+  });
+});
 </script>
 </body>
 </html>
