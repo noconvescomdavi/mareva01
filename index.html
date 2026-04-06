@@ -994,7 +994,33 @@ document.querySelectorAll("a").forEach(link => {
       }, 300);
     }
   });
-});
+})async function finalizarCompra() {
+  if (cart.length === 0) {
+    alert("Carrinho vazio");
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(cart)
+    });
+
+    const data = await res.json();
+
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      alert("Erro ao iniciar pagamento");
+    }
+
+  } catch (err) {
+    alert("Erro na conexão");
+  }
+};
 </script>
 </body>
 </html>
