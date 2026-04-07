@@ -482,7 +482,7 @@ input, textarea {
   </div>
   <div id="items"></div>
   <p>Total: R$ <span id="total">0</span></p>
-  <div class="buy-btn" onclick="finalizarCompra()">Finalizar compra</div>
+  <div class="buy-btn" onclick="finalizarCompra()"> Finalizar compra</div>
 </div>
 
 <!-- LIGHTBOX & GALLERY -->
@@ -534,10 +534,32 @@ function changeQtd(index,change){ cart[index].qtd+=change; if(cart[index].qtd<=0
 function removeItem(index){ cart.splice(index,1); saveCart(); }
 function openCart(){ document.getElementById("cart").classList.add("open"); document.getElementById("overlay").classList.add("show"); }
 function closeCart(){ document.getElementById("cart").classList.remove("open"); document.getElementById("overlay").classList.remove("show"); }
-function finalizarCompra(){
-  if(cart.length===0){ alert("Seu carrinho está vazio"); return; }
-  alert("Compra simulada! Total: R$ "+cart.reduce((sum,i)=>sum+i.preco*i.qtd,0).toFixed(2));
-  cart=[]; saveCart();
+async function finalizarCompra(){
+  if(cart.length === 0){
+    alert("Seu carrinho está vazio");
+    return;
+  }
+
+  try {
+    const response = await fetch('/api/create_preference', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(cart)
+    });
+
+    const data = await response.json();
+
+    if(data.init_point){
+      window.location.href = data.init_point;
+    } else {
+      alert("Erro ao gerar pagamento");
+    }
+
+  } catch (error) {
+    alert("Erro ao conectar com pagamento");
+  }
 }
 updateCart();
 
@@ -576,7 +598,7 @@ document.querySelectorAll("a").forEach(link=>{
     if(this.href&&!this.href.includes("#")){ e.preventDefault(); document.body.classList.add("fade-out"); setTimeout(()=>window.location=this.href,300); }
   });
 });
-
+ src="js/checkout.js"
 
 </script>
 </body>
