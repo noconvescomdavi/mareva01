@@ -27,4 +27,8 @@ export default async function handler(req, res) {
   res.status(200).json({
     init_point: response.body.init_point
   });
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 1f866ffdf14509b091eaa8cd1aec6cb61c693207
